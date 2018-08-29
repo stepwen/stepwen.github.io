@@ -108,20 +108,20 @@
 
 
 
-  <meta name="description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。 Windows配置外部tomcat监听 在部署版tomcat/bin目录下，创建一个debug.bat（名称随意） 1234set JPDA_ADDRESS=">
-<meta name="keywords" content="debug">
+  <meta name="description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
+<meta name="keywords" content="tomcat,remote">
 <meta property="og:type" content="article">
 <meta property="og:title" content="IDEA 远程连接外部tomcat调试">
 <meta property="og:url" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/index.html">
 <meta property="og:site_name" content="大文的窝">
-<meta property="og:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。 Windows配置外部tomcat监听 在部署版tomcat/bin目录下，创建一个debug.bat（名称随意） 1234set JPDA_ADDRESS=">
+<meta property="og:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/Remote创建.png">
 <meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/配置remote应用.png">
-<meta property="og:updated_time" content="2018-08-29T08:25:30.166Z">
+<meta property="og:updated_time" content="2018-08-29T08:59:20.951Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IDEA 远程连接外部tomcat调试">
-<meta name="twitter:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。 Windows配置外部tomcat监听 在部署版tomcat/bin目录下，创建一个debug.bat（名称随意） 1234set JPDA_ADDRESS=">
+<meta name="twitter:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
 <meta name="twitter:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/Remote创建.png">
 
 
@@ -231,6 +231,22 @@
         
         
           
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br />分类</a>
+  </li>
+        
+        
+        
+          
           <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />归档</a>
@@ -326,7 +342,7 @@
                 
               
 
-              <time title="创建时间：2018-08-29 10:00:49 / 修改时间：16:25:30" itemprop="dateCreated datePublished" datetime="2018-08-29T10:00:49+08:00">2018-08-29</time>
+              <time title="创建时间：2018-08-29 10:00:49 / 修改时间：16:59:20" itemprop="dateCreated datePublished" datetime="2018-08-29T10:00:49+08:00">2018-08-29</time>
             
 
             
@@ -336,6 +352,24 @@
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/debug/" itemprop="url" rel="index"><span itemprop="name">debug</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -372,7 +406,7 @@
       
 
       
-        <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。</p>
+        <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。<br><a id="more"></a></p>
 <h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="配置外部tomcat监听"><a href="#配置外部tomcat监听" class="headerlink" title="配置外部tomcat监听"></a>配置外部tomcat监听</h3><ol>
 <li><p>在部署版tomcat/bin目录下，创建一个debug.bat（名称随意）</p>
 <figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> JPDA_ADDRESS=<span class="number">8000</span></span><br><span class="line"><span class="built_in">set</span> JPAD_TRANSPORT=dt_socket</span><br><span class="line"><span class="built_in">SET</span> CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=<span class="number">8899</span></span><br><span class="line">startup</span><br></pre></td></tr></table></figure>
@@ -414,7 +448,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/debug/" rel="tag"># debug</a>
+            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+          
+            <a href="/tags/remote/" rel="tag"># remote</a>
           
         </div>
       
@@ -512,12 +548,10 @@
               
 
               
-
-              
                 
                 
-                <div class="site-state-item site-state-tags">
-                  
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
                     
                     
                       
@@ -525,8 +559,33 @@
                       
                     
                     <span class="site-state-item-count">2</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">标签</span>
-                  
+                  </a>
                 </div>
               
             </nav>
