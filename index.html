@@ -280,6 +280,160 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stepwen">
+      <meta itemprop="description" content="胡编乱造">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大文的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/08/29/IDEA-远程连接windows下tomcat调试/" itemprop="url">
+                  IDEA 远程连接外部tomcat调试
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-08-29 10:00:49 / 修改时间：16:25:30" itemprop="dateCreated datePublished" datetime="2018-08-29T10:00:49+08:00">2018-08-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。</p>
+<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="配置外部tomcat监听"><a href="#配置外部tomcat监听" class="headerlink" title="配置外部tomcat监听"></a>配置外部tomcat监听</h3><ol>
+<li><p>在部署版tomcat/bin目录下，创建一个debug.bat（名称随意）</p>
+<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> JPDA_ADDRESS=<span class="number">8000</span></span><br><span class="line"><span class="built_in">set</span> JPAD_TRANSPORT=dt_socket</span><br><span class="line"><span class="built_in">SET</span> CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=<span class="number">8899</span></span><br><span class="line">startup</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>双击刚创建的debug.bat执行，会启动tomcat监听</p>
+<h3 id="配置IDEA调用外部Tomcat"><a href="#配置IDEA调用外部Tomcat" class="headerlink" title="配置IDEA调用外部Tomcat"></a>配置IDEA调用外部Tomcat</h3></li>
+<li>首先，打开Edit configurations，点击+号，创建一个Remote应用。<br><img src="/2018/08/29/IDEA-远程连接windows下tomcat调试/Remote创建.png" alt=""></li>
+<li>配置remote应用，只需要配置Name，Host，Port；其中Name为应用名称可以随意，Host和Port配置成第一步中的外部tomcat的地址和端口，我的配置为localhost和8899<br><img src="/2018/08/29/IDEA-远程连接windows下tomcat调试/配置remote应用.png" alt=""></li>
+<li>调试时，需要把项目打成war包放入外部tomcat/webapps中，然后先启动debug.bat，再启动配置好的Remote服务，就会进入相应的断点，跟本地debug调试一样。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -343,7 +497,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-08-28 20:39:29" itemprop="dateModified" datetime="2018-08-28T20:39:29+08:00">2018-08-28</time>
+                <time title="修改时间：2018-08-29 10:03:03" itemprop="dateModified" datetime="2018-08-29T10:03:03+08:00">2018-08-29</time>
               
             
           </span>
@@ -785,7 +939,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">3</span>
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -802,7 +956,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">1</span>
+                      
+                    
+                    <span class="site-state-item-count">2</span>
                     <span class="site-state-item-name">标签</span>
                   
                 </div>
