@@ -108,25 +108,25 @@
 
 
 
-  <meta name="description" content="1import com.zxw.springboot.baseline.utils.BaseController">
-<meta name="keywords" content="git,ssh">
+  <meta name="description" content="胡编乱造">
+<meta name="keywords" content="linux,ngx_lua_waf,openresty">
 <meta property="og:type" content="article">
-<meta property="og:title" content="git 的多个SSH KEY 管理">
-<meta property="og:url" content="http://stepwen.github.io/2018/08/25/git-的多个SSH-KEY-管理/index.html">
+<meta property="og:title" content="centos下安装openresty+ngx_lua_waf防火墙部署">
+<meta property="og:url" content="http://stepwen.github.io/2018/08/29/centos下安装openresty-ngx-lua-waf防火墙部署/index.html">
 <meta property="og:site_name" content="大文的窝">
-<meta property="og:description" content="1import com.zxw.springboot.baseline.utils.BaseController">
+<meta property="og:description" content="胡编乱造">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-08-29T08:58:44.272Z">
+<meta property="og:updated_time" content="2018-08-29T09:44:32.229Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="git 的多个SSH KEY 管理">
-<meta name="twitter:description" content="1import com.zxw.springboot.baseline.utils.BaseController">
+<meta name="twitter:title" content="centos下安装openresty+ngx_lua_waf防火墙部署">
+<meta name="twitter:description" content="胡编乱造">
 
 
 
 
 
 
-  <link rel="canonical" href="http://stepwen.github.io/2018/08/25/git-的多个SSH-KEY-管理/"/>
+  <link rel="canonical" href="http://stepwen.github.io/2018/08/29/centos下安装openresty-ngx-lua-waf防火墙部署/"/>
 
 
 
@@ -136,7 +136,7 @@
   };
 </script>
 
-  <title>git 的多个SSH KEY 管理 | 大文的窝</title>
+  <title>centos下安装openresty+ngx_lua_waf防火墙部署 | 大文的窝</title>
   
 
 
@@ -297,7 +297,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/08/25/git-的多个SSH-KEY-管理/">
+    <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/08/29/centos下安装openresty-ngx-lua-waf防火墙部署/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stepwen">
@@ -314,7 +314,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">git 的多个SSH KEY 管理
+          <h1 class="post-title" itemprop="name headline">centos下安装openresty+ngx_lua_waf防火墙部署
               
             
           </h1>
@@ -339,24 +339,12 @@
                 
               
 
-              <time title="创建时间：2018-08-25 10:22:51" itemprop="dateCreated datePublished" datetime="2018-08-25T10:22:51+08:00">2018-08-25</time>
+              <time title="创建时间：2018-08-29 17:43:41 / 修改时间：17:44:32" itemprop="dateCreated datePublished" datetime="2018-08-29T17:43:41+08:00">2018-08-29</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-08-29 16:58:44" itemprop="dateModified" datetime="2018-08-29T16:58:44+08:00">2018-08-29</time>
               
             
           </span>
@@ -373,7 +361,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/git/" itemprop="url" rel="index"><span itemprop="name">git</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/安全/" itemprop="url" rel="index"><span itemprop="name">安全</span></a></span>
 
                 
                 
@@ -415,8 +403,7 @@
       
 
       
-        <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.zxw.springboot.baseline.utils.BaseController</span><br></pre></td></tr></table></figure>
-
+        
       
     </div>
 
@@ -447,9 +434,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/git/" rel="tag"># git</a>
+            <a href="/tags/linux/" rel="tag"># linux</a>
           
-            <a href="/tags/ssh/" rel="tag"># ssh</a>
+            <a href="/tags/ngx-lua-waf/" rel="tag"># ngx_lua_waf</a>
+          
+            <a href="/tags/openresty/" rel="tag"># openresty</a>
           
         </div>
       
@@ -462,8 +451,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/24/hello-world/" rel="next" title="Hello World">
-                <i class="fa fa-chevron-left"></i> Hello World
+              <a href="/2018/08/29/IDEA-远程连接windows下tomcat调试/" rel="next" title="IDEA 远程连接外部tomcat调试">
+                <i class="fa fa-chevron-left"></i> IDEA 远程连接外部tomcat调试
               </a>
             
           </div>
@@ -471,10 +460,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/" rel="prev" title="记录 springboot中ContextLoader.getCurrentWebApplicationContext()为null 排查">
-                记录 springboot中ContextLoader.getCurrentWebApplicationContext()为null 排查 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
