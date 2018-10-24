@@ -323,7 +323,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 <a class="post-title-link" href="/2018/10/24/springboot改造本地webservice项目/" itemprop="url">
-                  springboot改造本地webservice项目
+                  springboot二次改造本地内网项目（1）
                 </a>
               
             
@@ -349,12 +349,34 @@
                 
               
 
-              <time title="创建时间：2018-10-24 13:25:31" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
+              <time title="创建时间：2018-10-24 13:25:31 / 修改时间：15:48:58" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
             
 
+            
+              
+
+              
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/微服务/" itemprop="url" rel="index"><span itemprop="name">微服务</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -385,7 +407,15 @@
       
         
           
-            
+            <h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>&ensp;&ensp;&ensp;&ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。<br>&ensp;&ensp;&ensp;&ensp;第一次重构解决了接口变更重新修改部署难的问题，但是引入了一个新的问题，在排查接口报错的时候，由于所有委办局接口都在一个项目调用，日志刷新比较快，不容易实时抓取到错误日志。正好前端时间研究了springboot相关技术，并使用springboot重新搭建了一套ssm的后台基线框架，于是便有了这次使用springboot重构本地内网项目的想法。</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ol>
+<li>使用springboot重写内网调用各委办局的接口服务，一个委办局启用一个springboot项目。</li>
+<li>以springcloud-gateway作为唯一入口网关对springboot项目进行路由。</li>
+<li>增加用户、授权、鉴权模块  </li>
+<li>…  </li>
+<li>最终完成一个可视化API平台（饼有点大）</li>
+</ol>
+
           
         
       
@@ -1360,7 +1390,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1389,7 +1421,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>

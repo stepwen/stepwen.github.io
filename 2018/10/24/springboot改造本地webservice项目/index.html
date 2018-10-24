@@ -115,17 +115,18 @@
 
 
 
-  <meta name="description" content="胡编乱造">
+  <meta name="description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;第一次重构解决了接口变更重新修改部署难">
+<meta name="keywords" content="微服务">
 <meta property="og:type" content="article">
-<meta property="og:title" content="springboot改造本地webservice项目">
+<meta property="og:title" content="springboot二次改造本地内网项目（1）">
 <meta property="og:url" content="http://stepwen.github.io/2018/10/24/springboot改造本地webservice项目/index.html">
 <meta property="og:site_name" content="大文的窝">
-<meta property="og:description" content="胡编乱造">
+<meta property="og:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;第一次重构解决了接口变更重新修改部署难">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-24T05:25:31.237Z">
+<meta property="og:updated_time" content="2018-10-24T07:48:58.438Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="springboot改造本地webservice项目">
-<meta name="twitter:description" content="胡编乱造">
+<meta name="twitter:title" content="springboot二次改造本地内网项目（1）">
+<meta name="twitter:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;第一次重构解决了接口变更重新修改部署难">
 
 
 
@@ -142,7 +143,7 @@
   };
 </script>
 
-  <title>springboot改造本地webservice项目 | 大文的窝</title>
+  <title>springboot二次改造本地内网项目（1） | 大文的窝</title>
   
 
 
@@ -320,7 +321,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">springboot改造本地webservice项目
+          <h1 class="post-title" itemprop="name headline">springboot二次改造本地内网项目（1）
               
             
           </h1>
@@ -345,12 +346,34 @@
                 
               
 
-              <time title="创建时间：2018-10-24 13:25:31" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
+              <time title="创建时间：2018-10-24 13:25:31 / 修改时间：15:48:58" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
             
 
+            
+              
+
+              
             
           </span>
 
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/微服务/" itemprop="url" rel="index"><span itemprop="name">微服务</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -387,7 +410,15 @@
       
 
       
-        
+        <h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>&ensp;&ensp;&ensp;&ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。<br>&ensp;&ensp;&ensp;&ensp;第一次重构解决了接口变更重新修改部署难的问题，但是引入了一个新的问题，在排查接口报错的时候，由于所有委办局接口都在一个项目调用，日志刷新比较快，不容易实时抓取到错误日志。正好前端时间研究了springboot相关技术，并使用springboot重新搭建了一套ssm的后台基线框架，于是便有了这次使用springboot重构本地内网项目的想法。</p>
+<h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ol>
+<li>使用springboot重写内网调用各委办局的接口服务，一个委办局启用一个springboot项目。</li>
+<li>以springcloud-gateway作为唯一入口网关对springboot项目进行路由。</li>
+<li>增加用户、授权、鉴权模块  </li>
+<li>…  </li>
+<li>最终完成一个可视化API平台（饼有点大）</li>
+</ol>
+
       
     </div>
 
@@ -415,6 +446,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/微服务/" rel="tag"># 微服务</a>
+          
+        </div>
       
 
       
@@ -478,8 +515,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -513,7 +559,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">3</span>
+                      
+                    
+                    <span class="site-state-item-count">4</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -542,7 +590,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">8</span>
+                      
+                    
+                    <span class="site-state-item-count">9</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -582,6 +632,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机"><span class="nav-number">1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
