@@ -115,18 +115,18 @@
 
 
 
-  <meta name="description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;第一次重构解决了接口变更重新修改部署难">
+  <meta name="description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。">
 <meta name="keywords" content="微服务">
 <meta property="og:type" content="article">
 <meta property="og:title" content="springboot二次改造本地内网项目（1）">
 <meta property="og:url" content="http://stepwen.github.io/2018/10/24/springboot改造本地webservice项目/index.html">
 <meta property="og:site_name" content="大文的窝">
-<meta property="og:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;第一次重构解决了接口变更重新修改部署难">
+<meta property="og:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-24T07:48:58.438Z">
+<meta property="og:updated_time" content="2018-10-24T09:08:43.281Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot二次改造本地内网项目（1）">
-<meta name="twitter:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;第一次重构解决了接口变更重新修改部署难">
+<meta name="twitter:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。">
 
 
 
@@ -346,7 +346,7 @@
                 
               
 
-              <time title="创建时间：2018-10-24 13:25:31 / 修改时间：15:48:58" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
+              <time title="创建时间：2018-10-24 13:25:31 / 修改时间：17:08:43" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
             
 
             
@@ -410,14 +410,16 @@
       
 
       
-        <h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>&ensp;&ensp;&ensp;&ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。<br>&ensp;&ensp;&ensp;&ensp;第一次重构解决了接口变更重新修改部署难的问题，但是引入了一个新的问题，在排查接口报错的时候，由于所有委办局接口都在一个项目调用，日志刷新比较快，不容易实时抓取到错误日志。正好前端时间研究了springboot相关技术，并使用springboot重新搭建了一套ssm的后台基线框架，于是便有了这次使用springboot重构本地内网项目的想法。</p>
+        <h3 id="动机"><a href="#动机" class="headerlink" title="动机"></a>动机</h3><p>&ensp;&ensp;&ensp;&ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。<br><a id="more"></a><br>&ensp;&ensp;&ensp;&ensp;第一次重构解决了接口变更重新修改部署难的问题，但是引入了一个新的问题，在排查接口报错的时候，由于所有委办局接口都在一个项目调用，日志刷新比较快，不容易实时抓取到错误日志。正好前段时间研究了springboot相关技术，并使用springboot重新搭建了一套ssm的后台基线框架，于是便有了这次使用springboot重构本地内网项目的想法。</p>
 <h3 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h3><ol>
-<li>使用springboot重写内网调用各委办局的接口服务，一个委办局启用一个springboot项目。</li>
-<li>以springcloud-gateway作为唯一入口网关对springboot项目进行路由。</li>
+<li>使用springboot重写内网的接口服务。</li>
+<li>添加网关服务。</li>
 <li>增加用户、授权、鉴权模块  </li>
 <li>…  </li>
 <li>最终完成一个可视化API平台（饼有点大）</li>
 </ol>
+<h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>&ensp;&ensp;&ensp;&ensp;第一次改造项目的中的每一个单独service类采用springboot重构，目前采用每一个委办局创建一个单独的springboot项目。（已完成项目重构）</p>
+<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>&ensp;&ensp;&ensp;&ensp;网关的选择上没有任何纠结，由于本人对spring的信服，知道有springcloud-gateway的网关之后，直接就选择了它。<br>&ensp;&ensp;&ensp;&ensp;</p>
 
       
     </div>
@@ -642,7 +644,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机"><span class="nav-number">1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#动机"><span class="nav-number">1.</span> <span class="nav-text">动机</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#目标"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#过程"><span class="nav-number">3.</span> <span class="nav-text">过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#第一步"><span class="nav-number">3.1.</span> <span class="nav-text">第一步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#第二步"><span class="nav-number">3.2.</span> <span class="nav-text">第二步</span></a></li></ol></li></ol></div>
             
 
           </div>
