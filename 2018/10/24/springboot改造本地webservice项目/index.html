@@ -123,10 +123,13 @@
 <meta property="og:site_name" content="大文的窝">
 <meta property="og:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2018-10-24T09:08:43.281Z">
+<meta property="og:image" content="http://stepwen.github.io/2018/10/24/springboot改造本地webservice项目/gatewway%20route%20yml.png">
+<meta property="og:image" content="http://stepwen.github.io/2018/10/24/springboot改造本地webservice项目/gateway%20for%20java.png">
+<meta property="og:updated_time" content="2018-10-25T01:43:18.605Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="springboot二次改造本地内网项目（1）">
 <meta name="twitter:description" content="动机&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司原有的内网调用各委办局接口采用的是mule的ESB方式，由于原团队一家离职没有人维护，委办局接口发生变化之后，部署经常性出现问题。个人对于mule的方式也不是很了解，于是用公司原有的spingmvc的基线版本，将所有接口调用都放到一个项目里进行了第一次重构。">
+<meta name="twitter:image" content="http://stepwen.github.io/2018/10/24/springboot改造本地webservice项目/gatewway%20route%20yml.png">
 
 
 
@@ -346,12 +349,24 @@
                 
               
 
-              <time title="创建时间：2018-10-24 13:25:31 / 修改时间：17:08:43" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
+              <time title="创建时间：2018-10-24 13:25:31" itemprop="dateCreated datePublished" datetime="2018-10-24T13:25:31+08:00">2018-10-24</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-10-25 09:43:18" itemprop="dateModified" datetime="2018-10-25T09:43:18+08:00">2018-10-25</time>
               
             
           </span>
@@ -419,7 +434,7 @@
 <li>最终完成一个可视化API平台（饼有点大）</li>
 </ol>
 <h3 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h3><h4 id="第一步"><a href="#第一步" class="headerlink" title="第一步"></a>第一步</h4><p>&ensp;&ensp;&ensp;&ensp;第一次改造项目的中的每一个单独service类采用springboot重构，目前采用每一个委办局创建一个单独的springboot项目。（已完成项目重构）</p>
-<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>&ensp;&ensp;&ensp;&ensp;网关的选择上没有任何纠结，由于本人对spring的信服，知道有springcloud-gateway的网关之后，直接就选择了它。<br>&ensp;&ensp;&ensp;&ensp;</p>
+<h4 id="第二步"><a href="#第二步" class="headerlink" title="第二步"></a>第二步</h4><p>&ensp;&ensp;&ensp;&ensp;网关的选择上没有任何纠结，由于本人对spring的信服，知道有springcloud-gateway的网关之后，直接就选择了它。下面是官网提供的2种路由方式。<br><img src="/2018/10/24/springboot改造本地webservice项目/gatewway route yml.png" alt="图1" title="图1"><br><img src="/2018/10/24/springboot改造本地webservice项目/gateway for java.png" alt="图2" title="图2"></p>
 
       
     </div>
