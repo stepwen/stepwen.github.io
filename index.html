@@ -303,6 +303,172 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/10/29/解决jackson序列化pojo类出现大小写字段各一遍问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stepwen">
+      <meta itemprop="description" content="胡编乱造">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大文的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/10/29/解决jackson序列化pojo类出现大小写字段各一遍问题/" itemprop="url">
+                  解决jackson序列化pojo类出现大小写问题
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-10-29 13:38:34 / 修改时间：15:01:17" itemprop="dateCreated datePublished" datetime="2018-10-29T13:38:34+08:00">2018-10-29</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="现象："><a href="#现象：" class="headerlink" title="现象："></a>现象：</h3><p>&ensp;&ensp;&ensp;&ensp;公司的一个springboot项目，由于pojo类的字段都是全大写的，刚开始开发的时候在每个字段上添加了jackson的@JsonProperty(value=”USERID”)注解，用来控制返回json为全大写字段。在项目开发过程中发现了lombok工具可以减少getter/setter的代码，便引入进了项目中，删除了所有pojo的getter/setter方法。后来经前端发现，在部分API接口返回的json中同时包含了大写和小写的pojo字段各一遍。</p>
+<h3 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h3><p>&ensp;&ensp;&ensp;&ensp;发现问题之后，一度以为是lombok导致的。后来经查询jackson的原因导致的，jakson把JsonProperty放到字段名上的时候，需要在getter方法上写上JsonIgnore注解，但是由于getter方法是lombok自动生成的，重新手动插入太浪费时间，于是切换了fastjson作为json序列化的工具。  </p>
+<h3 id="顺便记录一下切换步骤："><a href="#顺便记录一下切换步骤：" class="headerlink" title="顺便记录一下切换步骤："></a>顺便记录一下切换步骤：</h3><h4 id="引入fastjson包"><a href="#引入fastjson包" class="headerlink" title="引入fastjson包"></a>引入fastjson包</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;$&#123;fastjson.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="启动类中重写转换方法"><a href="#启动类中重写转换方法" class="headerlink" title="启动类中重写转换方法"></a>启动类中重写转换方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 切换json解析方式，用fastjson代替默认jackson方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> HttpMessageConverters <span class="title">fastJsonHttpMessageConverters</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//1、定义一个消息转换对象conver</span></span><br><span class="line">	FastJsonHttpMessageConverter fastConverter = <span class="keyword">new</span> FastJsonHttpMessageConverter();</span><br><span class="line">	<span class="comment">//2、添加fastjson配置信息</span></span><br><span class="line">	FastJsonConfig fastJsonConfig = <span class="keyword">new</span> FastJsonConfig();</span><br><span class="line">	fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);</span><br><span class="line">   <span class="comment">//3、判断propertyName长度大于1、且头两个字符都是大写时，不做小写转换</span></span><br><span class="line">	TypeUtils.compatibleWithJavaBean=<span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">	fastConverter.setFastJsonConfig(fastJsonConfig);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> HttpMessageConverters(fastConverter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="jackson序列化出现两遍的原因"><a href="#jackson序列化出现两遍的原因" class="headerlink" title="jackson序列化出现两遍的原因"></a>jackson序列化出现两遍的原因</h3><p>&ensp;&ensp;&ensp;&ensp;经查询得知，jackson2在初始化序列器时，对pojo类型对象会先收集其属性信息，包括成员变量和方法，然后以属性名称和处理过后的方法名称作为key保存到一个LinkedHashMap中。收集过程中会调用com.fasterxml.jackson.databind.util.BeanUtil中的legacyMangleProperName方法来处理方法名称，它会将get/set方法前缀，即get或set去掉，并将其后面的连续大写字符转换成小写返回。收集完属性信息之后，下面会删除掉非可见的属性，一般是指的私有成员变量；但，如果加了@JsonProperty注解，Jackson2会认为这个属性是可见的，不会进行删除，此时就会出现两个同一个值得属性被一同序列化。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/10/24/springboot改造本地webservice项目/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -366,7 +532,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-10-25 09:43:18" itemprop="dateModified" datetime="2018-10-25T09:43:18+08:00">2018-10-25</time>
+                <time title="修改时间：2018-10-29 11:18:08" itemprop="dateModified" datetime="2018-10-29T11:18:08+08:00">2018-10-29</time>
               
             
           </span>
@@ -1380,7 +1546,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1401,7 +1567,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">4</span>
+                      
+                    
+                    <span class="site-state-item-count">5</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1432,7 +1600,15 @@
                     
                       
                     
-                    <span class="site-state-item-count">9</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
