@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="jackson,JsonProperty,JsonIgnore,lombok,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="现象：&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司的一个springboot项目，由于pojo类的字段都是全大写的，刚开始开发的时候在每个字段上添加了jackson的@JsonProperty(value=”USERID”)注解，用来控制返回json为全大写字段。在项目开发过程中发现了lombok工具可以减少getter/setter的代码，便引入进了项目中，删除了所有pojo的gette">
+<meta name="keywords" content="jackson,JsonProperty,JsonIgnore,lombok">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决jackson序列化pojo类出现大小写问题">
+<meta property="og:url" content="http://stepwen.github.io/2018/10/29/解决jackson序列化pojo类出现大小写字段各一遍问题/index.html">
+<meta property="og:site_name" content="大文的窝">
+<meta property="og:description" content="现象：&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司的一个springboot项目，由于pojo类的字段都是全大写的，刚开始开发的时候在每个字段上添加了jackson的@JsonProperty(value=”USERID”)注解，用来控制返回json为全大写字段。在项目开发过程中发现了lombok工具可以减少getter/setter的代码，便引入进了项目中，删除了所有pojo的gette">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2018-11-20T03:29:17.984Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="解决jackson序列化pojo类出现大小写问题">
+<meta name="twitter:description" content="现象：&amp;ensp;&amp;ensp;&amp;ensp;&amp;ensp;公司的一个springboot项目，由于pojo类的字段都是全大写的，刚开始开发的时候在每个字段上添加了jackson的@JsonProperty(value=”USERID”)注解，用来控制返回json为全大写字段。在项目开发过程中发现了lombok工具可以减少getter/setter的代码，便引入进了项目中，删除了所有pojo的gette">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://stepwen.github.io/2018/10/29/解决jackson序列化pojo类出现大小写字段各一遍问题/">
+
+
+
+
+
+  <title>解决jackson序列化pojo类出现大小写问题 | 大文的窝</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">大文的窝</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/10/29/解决jackson序列化pojo类出现大小写字段各一遍问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Stepwen">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="大文的窝">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">解决jackson序列化pojo类出现大小写问题</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-10-29T13:38:34+08:00">
+                2018-10-29
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bug/" itemprop="url" rel="index">
+                    <span itemprop="name">bug</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="现象："><a href="#现象：" class="headerlink" title="现象："></a>现象：</h3><p>&ensp;&ensp;&ensp;&ensp;公司的一个springboot项目，由于pojo类的字段都是全大写的，刚开始开发的时候在每个字段上添加了jackson的@JsonProperty(value=”USERID”)注解，用来控制返回json为全大写字段。在项目开发过程中发现了lombok工具可以减少getter/setter的代码，便引入进了项目中，删除了所有pojo的getter/setter方法。后来经前端发现，在部分API接口返回的json中同时包含了大写和小写的pojo字段各一遍。<br><a id="more"></a></p>
+<h3 id="解决："><a href="#解决：" class="headerlink" title="解决："></a>解决：</h3><p>&ensp;&ensp;&ensp;&ensp;发现问题之后，一度以为是lombok导致的。后来经查询jackson的原因导致的，jakson把JsonProperty放到字段名上的时候，需要在getter方法上写上JsonIgnore注解，但是由于getter方法是lombok自动生成的，重新手动插入太浪费时间，于是切换了fastjson作为json序列化的工具。  </p>
+<h3 id="顺便记录一下切换步骤："><a href="#顺便记录一下切换步骤：" class="headerlink" title="顺便记录一下切换步骤："></a>顺便记录一下切换步骤：</h3><h4 id="引入fastjson包"><a href="#引入fastjson包" class="headerlink" title="引入fastjson包"></a>引入fastjson包</h4><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;dependency&gt;</span><br><span class="line">  &lt;groupId&gt;com.alibaba&lt;/groupId&gt;</span><br><span class="line">  &lt;artifactId&gt;fastjson&lt;/artifactId&gt;</span><br><span class="line">  &lt;version&gt;$&#123;fastjson.version&#125;&lt;/version&gt;</span><br><span class="line">&lt;/dependency&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="启动类中重写转换方法"><a href="#启动类中重写转换方法" class="headerlink" title="启动类中重写转换方法"></a>启动类中重写转换方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 切换json解析方式，用fastjson代替默认jackson方式</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span></span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> HttpMessageConverters <span class="title">fastJsonHttpMessageConverters</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="comment">//1、定义一个消息转换对象conver</span></span><br><span class="line">	FastJsonHttpMessageConverter fastConverter = <span class="keyword">new</span> FastJsonHttpMessageConverter();</span><br><span class="line">	<span class="comment">//2、添加fastjson配置信息</span></span><br><span class="line">	FastJsonConfig fastJsonConfig = <span class="keyword">new</span> FastJsonConfig();</span><br><span class="line">	fastJsonConfig.setSerializerFeatures(SerializerFeature.PrettyFormat);</span><br><span class="line">   <span class="comment">//3、判断propertyName长度大于1、且头两个字符都是大写时，不做小写转换</span></span><br><span class="line">	TypeUtils.compatibleWithJavaBean=<span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">	fastConverter.setFastJsonConfig(fastJsonConfig);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="keyword">new</span> HttpMessageConverters(fastConverter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="jackson序列化出现两遍的原因"><a href="#jackson序列化出现两遍的原因" class="headerlink" title="jackson序列化出现两遍的原因"></a>jackson序列化出现两遍的原因</h3><p>&ensp;&ensp;&ensp;&ensp;经查询得知，jackson2在初始化序列器时，对pojo类型对象会先收集其属性信息，包括成员变量和方法，然后以属性名称和处理过后的方法名称作为key保存到一个LinkedHashMap中。收集过程中会调用com.fasterxml.jackson.databind.util.BeanUtil中的legacyMangleProperName方法来处理方法名称，它会将get/set方法前缀，即get或set去掉，并将其后面的连续大写字符转换成小写返回。收集完属性信息之后，下面会删除掉非可见的属性，一般是指的私有成员变量；但，如果加了@JsonProperty注解，Jackson2会认为这个属性是可见的，不会进行删除，此时就会出现两个同一个值得属性被一同序列化。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/jackson/" rel="tag"># jackson</a>
+          
+            <a href="/tags/JsonProperty/" rel="tag"># JsonProperty</a>
+          
+            <a href="/tags/JsonIgnore/" rel="tag"># JsonIgnore</a>
+          
+            <a href="/tags/lombok/" rel="tag"># lombok</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/10/24/springboot改造本地webservice项目/" rel="next" title="springboot二次改造本地内网项目（1）">
+                <i class="fa fa-chevron-left"></i> springboot二次改造本地内网项目（1）
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/11/20/记录shiro新增微信免登录的开发/" rel="prev" title="记录shiro新增微信免密登录的开发">
+                记录shiro新增微信免密登录的开发 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Stepwen</p>
+              <p class="site-description motion-element" itemprop="description">胡编乱造</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">9</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">17</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#现象："><span class="nav-number">1.</span> <span class="nav-text">现象：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决："><span class="nav-number">2.</span> <span class="nav-text">解决：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#顺便记录一下切换步骤："><span class="nav-number">3.</span> <span class="nav-text">顺便记录一下切换步骤：</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#引入fastjson包"><span class="nav-number">3.1.</span> <span class="nav-text">引入fastjson包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#启动类中重写转换方法"><span class="nav-number">3.2.</span> <span class="nav-text">启动类中重写转换方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#jackson序列化出现两遍的原因"><span class="nav-number">4.</span> <span class="nav-text">jackson序列化出现两遍的原因</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Stepwen</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
