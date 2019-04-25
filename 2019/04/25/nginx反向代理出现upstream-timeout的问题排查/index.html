@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="tomcat,remote,">
+  <meta name="keywords" content="nginx,timeout,localhost,">
 
 
 
@@ -79,21 +79,23 @@
 
 
 
-<meta name="description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
-<meta name="keywords" content="tomcat,remote">
+<meta name="description" content="现象&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开 排查&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 使用Jmeter持续调用同一个接口，发现存在规律性执行时间过长问题。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;2. 然后在内网直接调用tomcat测试，执行一切正常。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;3. 初步怀疑是">
+<meta name="keywords" content="nginx,timeout,localhost">
 <meta property="og:type" content="article">
-<meta property="og:title" content="IDEA 远程连接外部tomcat调试">
-<meta property="og:url" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/index.html">
+<meta property="og:title" content="nginx反向代理出现upstream timeout的问题排查">
+<meta property="og:url" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/index.html">
 <meta property="og:site_name" content="大文的窝">
-<meta property="og:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
+<meta property="og:description" content="现象&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开 排查&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 使用Jmeter持续调用同一个接口，发现存在规律性执行时间过长问题。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;2. 然后在内网直接调用tomcat测试，执行一切正常。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;3. 初步怀疑是">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/IDEA-远程连接windows下tomcat调试/Remote创建.png">
-<meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/IDEA-远程连接windows下tomcat调试/配置remote应用.png">
-<meta property="og:updated_time" content="2018-11-20T03:29:00.288Z">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/域名_tomcat.png">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/local_nginx_tomcat.png">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/具体解释.png">
+<meta property="og:updated_time" content="2019-04-25T09:35:42.447Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="IDEA 远程连接外部tomcat调试">
-<meta name="twitter:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
-<meta name="twitter:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/IDEA-远程连接windows下tomcat调试/Remote创建.png">
+<meta name="twitter:title" content="nginx反向代理出现upstream timeout的问题排查">
+<meta name="twitter:description" content="现象&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开 排查&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;1. 使用Jmeter持续调用同一个接口，发现存在规律性执行时间过长问题。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;2. 然后在内网直接调用tomcat测试，执行一切正常。&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;3. 初步怀疑是">
+<meta name="twitter:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png">
 
 
 
@@ -123,13 +125,13 @@
 
 
 
-  <link rel="canonical" href="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/">
+  <link rel="canonical" href="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/">
 
 
 
 
 
-  <title>IDEA 远程连接外部tomcat调试 | 大文的窝</title>
+  <title>nginx反向代理出现upstream timeout的问题排查 | 大文的窝</title>
   
 
 
@@ -236,7 +238,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/">
+    <link itemprop="mainEntityOfPage" href="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Stepwen">
@@ -253,7 +255,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">IDEA 远程连接外部tomcat调试</h1>
+          <h1 class="post-title" itemprop="name headline">nginx反向代理出现upstream timeout的问题排查</h1>
         
 
         <div class="post-meta">
@@ -265,8 +267,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-08-29T10:00:49+08:00">
-                2018-08-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-04-25T16:35:40+08:00">
+                2019-04-25
               </time>
             
 
@@ -288,8 +290,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/debug/" itemprop="url" rel="index">
-                    <span itemprop="name">debug</span>
+                  <a href="/categories/bug/" itemprop="url" rel="index">
+                    <span itemprop="name">bug</span>
                   </a>
                 </span>
 
@@ -325,17 +327,9 @@
       
 
       
-        <h2 id="用途"><a href="#用途" class="headerlink" title="用途"></a>用途</h2><p>针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。<br><a id="more"></a></p>
-<h2 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a>Windows</h2><h3 id="配置外部tomcat监听"><a href="#配置外部tomcat监听" class="headerlink" title="配置外部tomcat监听"></a>配置外部tomcat监听</h3><ol>
-<li><p>在部署版tomcat/bin目录下，创建一个debug.bat（名称随意）</p>
-<figure class="highlight bat"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">set</span> JPDA_ADDRESS=<span class="number">8000</span></span><br><span class="line"><span class="built_in">set</span> JPAD_TRANSPORT=dt_socket</span><br><span class="line"><span class="built_in">SET</span> CATALINA_OPTS=-server -Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=<span class="number">8899</span></span><br><span class="line">startup</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>双击刚创建的debug.bat执行，会启动tomcat监听</p>
-<h3 id="配置IDEA调用外部Tomcat"><a href="#配置IDEA调用外部Tomcat" class="headerlink" title="配置IDEA调用外部Tomcat"></a>配置IDEA调用外部Tomcat</h3></li>
-<li>首先，打开Edit configurations，点击+号，创建一个Remote应用。<br><img src="IDEA-远程连接windows下tomcat调试/Remote创建.png" alt></li>
-<li>配置remote应用，只需要配置Name，Host，Port；其中Name为应用名称可以随意，Host和Port配置成第一步中的外部tomcat的地址和端口，我的配置为localhost和8899<br><img src="IDEA-远程连接windows下tomcat调试/配置remote应用.png" alt></li>
-<li>调试时，需要把项目打成war包放入外部tomcat/webapps中，然后先启动debug.bat，再启动配置好的Remote服务，就会进入相应的断点，跟本地debug调试一样。</li>
-</ol>
+        <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开</p>
+<h3 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;1. 使用Jmeter持续调用同一个接口，发现存在规律性执行时间过长问题。<br><img src="nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;2. 然后在内网直接调用tomcat测试，执行一切正常。<br>&nbsp;&nbsp;&nbsp;&nbsp;3. 初步怀疑是nginx的问题，然后配置一个新的端口，该端口直接连上tomcat，过滤掉中间的nginx用以确认是否是nginx问题。结果如下：<br><img src="nginx反向代理出现upstream-timeout的问题排查/域名_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;4. 进一步确认是nginx的问题，在服务器上用localhost走nginx反向代理测试。<a href="https://nonobaba.iteye.com/blog/2233577" target="_blank" rel="noopener">结果如下</a>：<br><img src="nginx反向代理出现upstream-timeout的问题排查/local_nginx_tomcat.png" alt></p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>定位到nginx问题后，就是百度各种找答案。。。。<br>最后找到原因是nginx在window下把反向代理中的localhost解析成了ipv6的地址：：1，详细解释如下：<br><img src="nginx反向代理出现upstream-timeout的问题排查/具体解释.png" alt></p>
 
       
     </div>
@@ -353,9 +347,11 @@
       
         <div class="post-tags">
           
-            <a href="/tags/tomcat/" rel="tag"># tomcat</a>
+            <a href="/tags/nginx/" rel="tag"># nginx</a>
           
-            <a href="/tags/remote/" rel="tag"># remote</a>
+            <a href="/tags/timeout/" rel="tag"># timeout</a>
+          
+            <a href="/tags/localhost/" rel="tag"># localhost</a>
           
         </div>
       
@@ -368,8 +364,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/" rel="next" title="记录 springboot中ContextLoader.getCurrentWebApplicationContext()为null 排查">
-                <i class="fa fa-chevron-left"></i> 记录 springboot中ContextLoader.getCurrentWebApplicationContext()为null 排查
+              <a href="/2019/04/24/maven部署到远程tomcat/" rel="next" title="maven部署到远程tomcat">
+                <i class="fa fa-chevron-left"></i> maven部署到远程tomcat
               </a>
             
           </div>
@@ -377,10 +373,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/08/29/centos下安装openresty-ngx-lua-waf防火墙部署/" rel="prev" title="centos下安装openresty+ngx_lua_waf防火墙部署">
-                centos下安装openresty+ngx_lua_waf防火墙部署 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -512,7 +504,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#用途"><span class="nav-number">1.</span> <span class="nav-text">用途</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Windows"><span class="nav-number">2.</span> <span class="nav-text">Windows</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#配置外部tomcat监听"><span class="nav-number">2.1.</span> <span class="nav-text">配置外部tomcat监听</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置IDEA调用外部Tomcat"><span class="nav-number">2.2.</span> <span class="nav-text">配置IDEA调用外部Tomcat</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#现象"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#排查"><span class="nav-number">2.</span> <span class="nav-text">排查</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解决"><span class="nav-number">3.</span> <span class="nav-text">解决</span></a></li></ol></div>
             
 
           </div>
