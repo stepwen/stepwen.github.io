@@ -324,12 +324,14 @@
 
       
         
-          
-            <h3 id="1-在mapper的resultMap中定义对应列"><a href="#1-在mapper的resultMap中定义对应列" class="headerlink" title="1. 在mapper的resultMap中定义对应列"></a>1. 在mapper的resultMap中定义对应列</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"queryBlobCloum"</span> <span class="attr">type</span>=<span class="string">"PicVO(指向vo类)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"uuid"</span> <span class="attr">property</span>=<span class="string">"uuid"</span> <span class="attr">jdbcType</span>=<span class="string">"VARCHAR"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"pic"</span> <span class="attr">property</span>=<span class="string">"pic"</span> <span class="attr">jdbcType</span>=<span class="string">"BLOB"</span> <span class="attr">typeHandler</span>=<span class="string">"org.apache.ibatis.type.BlobTypeHandler"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="2-定义接收blob的vo类"><a href="#2-定义接收blob的vo类" class="headerlink" title="2. 定义接收blob的vo类"></a>2. 定义接收blob的vo类</h3><p>采用byte[]方式接收blob字段<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PicVO</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> String uuid;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">byte</span>[] pic;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h3 id="3-select调用resultmap"><a href="#3-select调用resultmap" class="headerlink" title="3. select调用resultmap"></a>3. select调用resultmap</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">select</span> <span class="attr">id</span>=<span class="string">"readPic"</span> <span class="attr">resultMap</span>=<span class="string">"queryBlobCloum"</span>&gt;</span></span><br><span class="line">    SELECT uuid,pic(Blob格式字段) FROM table</span><br><span class="line"><span class="tag">&lt;/<span class="name">select</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="4-用文件流保存对应的byte-字段"><a href="#4-用文件流保存对应的byte-字段" class="headerlink" title="4. 用文件流保存对应的byte[]字段"></a>4. 用文件流保存对应的byte[]字段</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">InputStream in = new ByteArrayInputStream(picture);</span><br><span class="line">String picName = &quot;E:/pic/&quot; + uuid + &quot;.png&quot;;</span><br><span class="line">System.out.println(picName);</span><br><span class="line">OutputStream out = new FileOutputStream(picName);</span><br><span class="line">byte[] buffer = new byte[1024];</span><br><span class="line">int len = 0;</span><br><span class="line">while ((len = in.read(buffer)) != -1) &#123;</span><br><span class="line">    out.write(buffer, 0, len);</span><br><span class="line">&#125;</span><br><span class="line">out.flush();</span><br><span class="line">in.close();</span><br><span class="line">out.close();</span><br></pre></td></tr></table></figure>
-          
+          <h3 id="1-在mapper的resultMap中定义对应列"><a href="#1-在mapper的resultMap中定义对应列" class="headerlink" title="1. 在mapper的resultMap中定义对应列"></a>1. 在mapper的resultMap中定义对应列</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">resultMap</span> <span class="attr">id</span>=<span class="string">"queryBlobCloum"</span> <span class="attr">type</span>=<span class="string">"PicVO(指向vo类)"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"uuid"</span> <span class="attr">property</span>=<span class="string">"uuid"</span> <span class="attr">jdbcType</span>=<span class="string">"VARCHAR"</span> /&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">result</span> <span class="attr">column</span>=<span class="string">"pic"</span> <span class="attr">property</span>=<span class="string">"pic"</span> <span class="attr">jdbcType</span>=<span class="string">"BLOB"</span> <span class="attr">typeHandler</span>=<span class="string">"org.apache.ibatis.type.BlobTypeHandler"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">resultMap</span>&gt;</span></span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/05/17/Mybatis读取Blob字段图片/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -468,15 +470,17 @@
 
       
         
-          
-            <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开</p>
-<h3 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;1. 使用Jmeter持续调用同一个接口，发现存在规律性执行时间过长问题。<br><img src="nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;2. 然后在内网直接调用tomcat测试，执行一切正常。<br>&nbsp;&nbsp;&nbsp;&nbsp;3. 初步怀疑是nginx的问题，然后配置一个新的端口，该端口直接连上tomcat，过滤掉中间的nginx用以确认是否是nginx问题。结果如下：<br><img src="nginx反向代理出现upstream-timeout的问题排查/域名_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;4. 进一步确认是nginx的问题，在服务器上用localhost走nginx反向代理测试。<a href="https://nonobaba.iteye.com/blog/2233577" target="_blank" rel="noopener">结果如下</a>：<br><img src="nginx反向代理出现upstream-timeout的问题排查/local_nginx_tomcat.png" alt></p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>定位到nginx问题后，就是百度各种找答案。。。。<br>最后找到原因是nginx在window下把反向代理中的localhost解析成了ipv6的地址：：1，详细解释如下：<br><img src="nginx反向代理出现upstream-timeout的问题排查/具体解释.png" alt></p>
-
-          
+          <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/#more" rel="contents">
+              Read more &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
-    </div>
+    </p></div>
     
     
     
