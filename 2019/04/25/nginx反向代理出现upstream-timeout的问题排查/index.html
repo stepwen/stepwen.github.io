@@ -87,15 +87,15 @@
 <meta property="og:site_name" content="大文的窝">
 <meta property="og:description" content="现象&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png">
-<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/域名_tomcat.png">
-<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/local_nginx_tomcat.png">
-<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/具体解释.png">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/域名_tomcat.png">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/local_nginx_tomcat.png">
+<meta property="og:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/具体解释.png">
 <meta property="og:updated_time" content="2019-05-17T06:00:50.975Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="nginx反向代理出现upstream timeout的问题排查">
 <meta name="twitter:description" content="现象&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开">
-<meta name="twitter:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png">
+<meta name="twitter:image" content="http://stepwen.github.io/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png">
 
 
 
@@ -328,8 +328,8 @@
 
       
         <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;最开始是同样代码部署到新服务器之后很慢，偶尔能够打开<br><a id="more"></a></p>
-<h3 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;1. 使用Jmeter持续调用同一个接口，发现存在规律性执行时间过长问题。<br><img src="nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;2. 然后在内网直接调用tomcat测试，执行一切正常。<br>&nbsp;&nbsp;&nbsp;&nbsp;3. 初步怀疑是nginx的问题，然后配置一个新的端口，该端口直接连上tomcat，过滤掉中间的nginx用以确认是否是nginx问题。结果如下：<br><img src="nginx反向代理出现upstream-timeout的问题排查/域名_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;4. 进一步确认是nginx的问题，在服务器上用localhost走nginx反向代理测试。<a href="https://nonobaba.iteye.com/blog/2233577" target="_blank" rel="noopener">结果如下</a>：<br><img src="nginx反向代理出现upstream-timeout的问题排查/local_nginx_tomcat.png" alt></p>
-<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>定位到nginx问题后，就是百度各种找答案。。。。<br>最后找到原因是nginx在window下把反向代理中的localhost解析成了ipv6的地址：：1，详细解释如下：<br><img src="nginx反向代理出现upstream-timeout的问题排查/具体解释.png" alt></p>
+<h3 id="排查"><a href="#排查" class="headerlink" title="排查"></a>排查</h3><p>&nbsp;&nbsp;&nbsp;&nbsp;1. 使用Jmeter持续调用同一个接口，发现存在规律性执行时间过长问题。<br><img src="/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/域名_nginx_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;2. 然后在内网直接调用tomcat测试，执行一切正常。<br>&nbsp;&nbsp;&nbsp;&nbsp;3. 初步怀疑是nginx的问题，然后配置一个新的端口，该端口直接连上tomcat，过滤掉中间的nginx用以确认是否是nginx问题。结果如下：<br><img src="/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/域名_tomcat.png" alt><br>&nbsp;&nbsp;&nbsp;&nbsp;4. 进一步确认是nginx的问题，在服务器上用localhost走nginx反向代理测试。<a href="https://nonobaba.iteye.com/blog/2233577" target="_blank" rel="noopener">结果如下</a>：<br><img src="/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/local_nginx_tomcat.png" alt></p>
+<h3 id="解决"><a href="#解决" class="headerlink" title="解决"></a>解决</h3><p>定位到nginx问题后，就是百度各种找答案。。。。<br>最后找到原因是nginx在window下把反向代理中的localhost解析成了ipv6的地址：：1，详细解释如下：<br><img src="/2019/04/25/nginx反向代理出现upstream-timeout的问题排查/具体解释.png" alt></p>
 
       
     </div>

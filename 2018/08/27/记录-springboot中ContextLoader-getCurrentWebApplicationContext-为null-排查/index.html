@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="大文的窝">
 <meta property="og:description" content="原由： 想要通过如下代码获取项目路径 123WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();ServletContext servletContext = webApplicationContext.getServletContext();String sav">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://stepwen.github.io/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/ContextLoader.getCurrentWebApplicationContext.png">
-<meta property="og:image" content="http://stepwen.github.io/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/SpringBootServletInitializer.onStartup.png">
-<meta property="og:updated_time" content="2018-08-30T11:48:25.125Z">
+<meta property="og:image" content="http://stepwen.github.io/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/ContextLoader.getCurrentWebApplicationContext.png">
+<meta property="og:image" content="http://stepwen.github.io/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/SpringBootServletInitializer.onStartup.png">
+<meta property="og:updated_time" content="2019-10-16T01:26:54.035Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录 springboot中ContextLoader.getCurrentWebApplicationContext()为null 排查">
 <meta name="twitter:description" content="原由： 想要通过如下代码获取项目路径 123WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();ServletContext servletContext = webApplicationContext.getServletContext();String sav">
-<meta name="twitter:image" content="http://stepwen.github.io/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/ContextLoader.getCurrentWebApplicationContext.png">
+<meta name="twitter:image" content="http://stepwen.github.io/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/ContextLoader.getCurrentWebApplicationContext.png">
 
 
 
@@ -334,10 +334,10 @@
 </li>
 </ol>
 <h3 id="排查："><a href="#排查：" class="headerlink" title="排查："></a>排查：</h3><ol>
-<li>debug进入ContextLoader.getCurrentWebApplicationContext()中发现WebApplicationContext返回为null【图1】。<br><img src="记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/ContextLoader.getCurrentWebApplicationContext.png" alt="图1" title="图1"></li>
+<li>debug进入ContextLoader.getCurrentWebApplicationContext()中发现WebApplicationContext返回为null【图1】。<br><img src="/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/ContextLoader.getCurrentWebApplicationContext.png" alt="图1" title="图1"></li>
 <li>debug进入SpringBootServletInitializer.onStartup方法，查看WebApplicationContext的初始化情况；结果并未执行onStartup方法。</li>
 <li>考虑到以往的ssm项目的经验ContextLoaderListener一般是配置在web.xml中的对web容器有依赖。所以使用远程tomcat重新debug一遍，确实进入了SpringBootServletInitializer.onStartup方法中，但是ContextLoader.getCurrentWebApplicationContext()的值仍然为null。</li>
-<li>重新查看onStartup方法时发现，springboot的onStartup方法初始化ContextLoaderListener时采用的时ContextLoader的构造方法【图2】，而并没有调用ContextLoader.ContextLoader.initWebApplicationContext方式，所以仍然获取不到。要是仍然要使用这种方式的话，需要重新SpringBootServletInitializer中的onStartup方法。<br><img src="记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/SpringBootServletInitializer.onStartup.png" alt="图2" title="图2"></li>
+<li>重新查看onStartup方法时发现，springboot的onStartup方法初始化ContextLoaderListener时采用的时ContextLoader的构造方法【图2】，而并没有调用ContextLoader.ContextLoader.initWebApplicationContext方式，所以仍然获取不到。要是仍然要使用这种方式的话，需要重新SpringBootServletInitializer中的onStartup方法。<br><img src="/2018/08/27/记录-springboot中ContextLoader-getCurrentWebApplicationContext-为null-排查/SpringBootServletInitializer.onStartup.png" alt="图2" title="图2"></li>
 <li>后来采用了String savePath = req.getSession().getServletContext().getRealPath(“/static/image”);的方式获取了路径信息。</li>
 </ol>
 

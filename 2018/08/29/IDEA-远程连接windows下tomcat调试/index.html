@@ -87,13 +87,13 @@
 <meta property="og:site_name" content="大文的窝">
 <meta property="og:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/IDEA-远程连接windows下tomcat调试/Remote创建.png">
-<meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/IDEA-远程连接windows下tomcat调试/配置remote应用.png">
+<meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/Remote创建.png">
+<meta property="og:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/配置remote应用.png">
 <meta property="og:updated_time" content="2018-11-20T03:29:00.288Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="IDEA 远程连接外部tomcat调试">
 <meta name="twitter:description" content="用途针对于springboot项目，在启动时tomcat中才会调用的部分断点调试。类似于SpringBootServletInitializer.onStartup方法，只会在tomcat运行时才会调用；采用jar包方式运行不会调用此方法。">
-<meta name="twitter:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/IDEA-远程连接windows下tomcat调试/Remote创建.png">
+<meta name="twitter:image" content="http://stepwen.github.io/2018/08/29/IDEA-远程连接windows下tomcat调试/Remote创建.png">
 
 
 
@@ -332,8 +332,8 @@
 </li>
 <li><p>双击刚创建的debug.bat执行，会启动tomcat监听</p>
 <h3 id="配置IDEA调用外部Tomcat"><a href="#配置IDEA调用外部Tomcat" class="headerlink" title="配置IDEA调用外部Tomcat"></a>配置IDEA调用外部Tomcat</h3></li>
-<li>首先，打开Edit configurations，点击+号，创建一个Remote应用。<br><img src="IDEA-远程连接windows下tomcat调试/Remote创建.png" alt></li>
-<li>配置remote应用，只需要配置Name，Host，Port；其中Name为应用名称可以随意，Host和Port配置成第一步中的外部tomcat的地址和端口，我的配置为localhost和8899<br><img src="IDEA-远程连接windows下tomcat调试/配置remote应用.png" alt></li>
+<li>首先，打开Edit configurations，点击+号，创建一个Remote应用。<br><img src="/2018/08/29/IDEA-远程连接windows下tomcat调试/Remote创建.png" alt></li>
+<li>配置remote应用，只需要配置Name，Host，Port；其中Name为应用名称可以随意，Host和Port配置成第一步中的外部tomcat的地址和端口，我的配置为localhost和8899<br><img src="/2018/08/29/IDEA-远程连接windows下tomcat调试/配置remote应用.png" alt></li>
 <li>调试时，需要把项目打成war包放入外部tomcat/webapps中，然后先启动debug.bat，再启动配置好的Remote服务，就会进入相应的断点，跟本地debug调试一样。</li>
 </ol>
 
